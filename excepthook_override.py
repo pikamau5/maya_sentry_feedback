@@ -4,7 +4,13 @@ utils = sys.modules['maya.utils']
 script_name = "script_name"
 
 class Except():
+	"""
+	Exception class
+	"""
     def excepthook(self, tb_type, exc_object, tb, detail=2):
+		"""
+		Exception hook override for maya
+		"""
         print utils.formatGuiException(tb_type, exc_object, tb, detail)
         cmds.ScriptEditor()
         errormsg = utils.formatGuiException(tb_type, exc_object, tb, detail)
@@ -24,6 +30,8 @@ class Except():
         sentry_sdk.capture_message(self.script_name + ' -- User feedback: ' + str(text) + " -- Error: " + errormsg)
 
     def run_excepthook(self, script):
-        print "lol!"
+		"""
+		Run the override
+		"""
         utils._guiExceptHook = self.excepthook
         self.script_name = script
